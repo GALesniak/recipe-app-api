@@ -8,33 +8,32 @@ services:
         - DEV=true
     ports:
       - "8000:8000"
-    volumes: 
+    volumes:
       - ./app:/app
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
-      - DB_HOST=db
-      - DB_NAME=devdb
+      - DB_HOST=db1
+      - DB_NAME=devdb_1
       - DB_USER=devuser
       - DB_PASS=changeme
       - DEBUG=1
     depends_on:
-      - db
-    
-  
-  db:
+      - db1
+
+
+  db1:
     image: postgres:13-alpine
     volumes:
-      - dev-db-data:/var/lib/postgresql/data
+      - dev-db1-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=devdb
+      - POSTGRES_DB=devdb_1
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
 
 volumes:
-  dev-db-data:
+  dev-db1-data:
   dev-static-data:
 
-    
